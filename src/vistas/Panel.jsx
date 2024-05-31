@@ -1,9 +1,11 @@
+import { TablaPendientes } from "../componentes/TablaPendientes";
+import { TablaResueltos } from "../componentes/TablaResueltos";
 
 
 export function Panel() {
   return (
     <>
-      <h1>Administración de incidencias</h1>
+      {/* <h1>Administración de incidencias</h1>
       <h2 className="mt-5">Tickets pendientes</h2>
       <table className="table mt-4">
         <thead>
@@ -86,8 +88,10 @@ export function Panel() {
             <td><button className="btn btn-danger" title="Eliminar ticket"><i className="bi bi-trash3"></i></button></td>
           </tr>
         </tbody>
-      </table>
-      <h2 className="mt-5">Tickets resueltos</h2>
+      </table> */}
+      <TablaPendientes></TablaPendientes>
+      <TablaResueltos></TablaResueltos>
+      {/* <h2 className="mt-5">Tickets resueltos</h2>
       <table className="table mt-4">
         <thead>
           <tr>
@@ -139,7 +143,7 @@ export function Panel() {
             <td><button className="btn btn-danger" title="Eliminar ticket"><i className="bi bi-trash3"></i></button></td>
           </tr>
         </tbody>
-      </table>
+      </table> */}
     </>
   );
 }
