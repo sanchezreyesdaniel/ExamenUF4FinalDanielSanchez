@@ -4,7 +4,7 @@ export const ContextoGlobal = createContext();
 import  dadesJSON  from "../bd.json";
 
 export const ContextoProvider = ({ children }) => {
-     const [dades, setDades] = useState(dadesJSON.tickets);
+     const [dades, setDades] = useState([]);
 //     const [dataHistoria, setDataHistoria] = useState(null);
 //     const [isOpen, setIsOpen] = useState(false);
 
@@ -27,6 +27,18 @@ export const ContextoProvider = ({ children }) => {
 //         fetchHistorias();
 //     }, []);
 // hasta aqui
+const fetchTickets = async () => {
+    try {
+        const response = await fetch('https://json-server-examen-nu.vercel.app/tickets');
+        const data = await response.json();
+        setDades(data);
+    } catch (error) {
+        console.error("Error fetching historias:", error);
+    }
+};
+useEffect(() => {
+fetchTickets();
+}, []);
 
     //const [cartas, setCartas] = useState(cartasJson.cervezas)
     //const [dataHistoria, setDataHistoria ] = useState()
@@ -35,7 +47,7 @@ export const ContextoProvider = ({ children }) => {
         <ContextoGlobal.Provider value={{ 
             // historias, setHistorias, dataHistoria, setDataHistoria, isOpen, onOpen, onClose, fetchHistorias 
            // cartas,setCartas,fetchHistorias,dataCarta, setDataCarta
-           dades, setDades
+           dades, setDades, fetchTickets
             }}>
             {children}
         </ContextoGlobal.Provider>
