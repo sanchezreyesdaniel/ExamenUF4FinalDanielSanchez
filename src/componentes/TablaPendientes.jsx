@@ -1,8 +1,30 @@
 import { useContext } from "react";
 import { ContextoGlobal } from "../context/GlobalContext";
+import "bootstrap-icons/font/bootstrap-icons.css";
 
 export function TablaPendientes() {
-    const { dades } = useContext(ContextoGlobal);
+    const { dades, fetchTicketsPendientes} = useContext(ContextoGlobal);
+    // function controladorBorrarHistoria(){
+    //     console.log('Eliminar historia con id:');
+    // }
+    async function controladorBorrarTicket(ticketId) {
+        
+
+        try {
+            const response = await fetch(`https://json-server-examen-nu.vercel.app/ticketsPendientes/${ticketId}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+            if(response.ok){
+                await fetchTicketsPendientes();
+            }
+                
+        } catch (error) {
+            console.error('Error al eliminar la historia:', error);
+        }
+    }
 
     return (
         <div>
@@ -22,8 +44,8 @@ export function TablaPendientes() {
                     </tr>
                 </thead>
                 <tbody>
-                    {dades.ticketsPendientes.map(ticket => (
-                        <tr key={ticket.codigo}>
+                    {dades.map(ticket => (
+                        <tr id={ticket.id} key={ticket.id}>
                             <td>{ticket.codigo}</td>
                             <td>{ticket.fecha}</td>
                             <td>{ticket.aula}</td>
@@ -33,8 +55,8 @@ export function TablaPendientes() {
                             <td>{ticket.alumno}</td>
                             <td><button className="btn btn-success" title="Resolver ticket">Resolver</button></td>
                             <td><button className="btn btn-warning" title="Añadir comentario"><i className="bi bi-pencil" data-bs-toggle="modal" data-bs-target="#exampleModal"></i></button></td>
-                            <td><button className="btn btn-info" title="Ver comentarios"><i className="bi bi-chat-left-text"></i></button></td>
-                            <td><button className="btn btn-danger" title="Eliminar ticket"><i className="bi bi-trash3"></i></button></td>
+                            <td><button  className="btn btn-info" title="Ver comentarios"><i className="bi bi-chat-left-text"></i></button></td>
+                            <td><button onClick={() => controladorBorrarTicket(ticket.id)} className="btn btn-danger" title="Eliminar ticket"><i className="bi bi-trash3"></i></button></td>
                         </tr>
                     ))}
                 </tbody>
