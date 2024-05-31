@@ -3,19 +3,24 @@ import { ModalFormEditar } from "./ModalEditar";
 
 export function Card({ id, titulo, texto, imagen }) {
   const [showModal, setShowModal] = useState(false);
+  const [modalData, setModalData] = useState({ id, titulo, texto, imagen });
 
   const handleEdit = () => {
+    setModalData({ id, titulo, texto, imagen });
     setShowModal(true);
   };
-//Hola
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+  };
+
   return (
     <div>
       <div id={id} className="card" style={{ width: "18rem" }}>
         <img src={imagen} alt="" />
         <div className="card-body">
-          <h5 className="card-title">Card {titulo}</h5>
+          <h5 className="card-title">{titulo}</h5>
           <p className="card-text">{texto}</p>
-          {/* Abrir el modal al hacer clic en el botón "Editar" */}
           <button onClick={handleEdit} className="btn btn-primary">
             Editar
           </button>
@@ -24,7 +29,13 @@ export function Card({ id, titulo, texto, imagen }) {
           </a>
         </div>
       </div>
-      {showModal && <ModalFormEditar />}
+      {showModal && (
+        <ModalFormEditar
+          show={showModal}
+          handleClose={handleCloseModal}
+          initialData={modalData}
+        />
+      )}
     </div>
   );
 }

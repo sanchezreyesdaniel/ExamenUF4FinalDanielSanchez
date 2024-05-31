@@ -2,39 +2,28 @@ import React, { useContext, useState, useEffect } from 'react';
 import { Modal, Button, Form } from 'react-bootstrap';
 import { ContextoGlobal } from '../context/GlobalContext';
 
-export function ModalFormEditar() {
-    const { setCartas, fetchHistorias } = useContext(ContextoGlobal);
-    const [showModal, setShowModal] = useState(false);
+export function ModalFormEditar({ show, handleClose, initialData }) {
+    const { fetchHistorias } = useContext(ContextoGlobal);
     const [titulo, setTitulo] = useState('');
     const [texto, setTexto] = useState('');
     const [imagen, setImagen] = useState('');
 
     useEffect(() => {
-        handleShow(); // Llama a handleShow cuando el componente se monta
-    }, []); // El segundo argumento del useEffect, un array vacío, asegura que solo se ejecute una vez al montar el componente
-
-    const handleClose = () => {
-        setShowModal(false);
-        // Limpia los campos del formulario al cerrar el modal
-        setTitulo('');
-        setTexto('');
-        setImagen('');
-    };
-
-    const handleShow = () => setShowModal(true);
+        if (initialData) {
+            setTitulo(initialData.titulo);
+            setTexto(initialData.texto);
+            setImagen(initialData.imagen);
+        }
+    }, [initialData]);
 
     async function controladorNuevaHistoria() {
-        const dataCarta = {
-            titulo: titulo,
-            texto: texto,
-            imagen: imagen
-        };
+        const dataCarta = { titulo, texto, imagen };
 
-        console.log('Creando nueva historia:', dataCarta);
+        console.log('Editando historia:', dataCarta);
 
         try {
-            const response = await fetch('https://servidor-json-prueba.vercel.app/cervezas', {
-                method: 'POST',
+            const response = await fetch(`https://servidor-json-prueba.vercel.app/cervezas/${initialData.id}`, {
+                method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
                 },
@@ -45,14 +34,14 @@ export function ModalFormEditar() {
                 handleClose();
             }
         } catch (error) {
-            console.error('Error al crear la historia:', error);
+            console.error('Error al editar la historia:', error);
         }
     }
 
     return (
-        <Modal show={showModal} onHide={handleClose}>
+        <Modal show={show} onHide={handleClose}>
             <Modal.Header closeButton>
-                <Modal.Title>{titulo ? titulo : 'Nuevo Elemento'}</Modal.Title>
+                <Modal.Title>{titulo ? titulo : 'Editar Elemento'}</Modal.Title>
             </Modal.Header>
             <Modal.Body>
                 <Form>
