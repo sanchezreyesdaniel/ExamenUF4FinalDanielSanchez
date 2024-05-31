@@ -32,6 +32,7 @@ const fetchTicketsPendientes = async () => {
     try {
         const response = await fetch('https://json-server-examen-nu.vercel.app/ticketsPendientes');
         const data = await response.json();
+        data.sort((a, b) => new Date(a.fecha) - new Date(b.fecha))
         setDades(data);
     } catch (error) {
         console.error("Error fetching historias:", error);

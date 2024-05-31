@@ -26,8 +26,8 @@ export function TablaPendientes() {
         }
     }
 
-    function controladorActualizar(ticketId){
-        console.log('Hola',ticketId)
+    function controladorActualizar(){
+        console.log('Hola')
     }
 
     return (
