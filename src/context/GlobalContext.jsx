@@ -12,7 +12,8 @@ export const ContextoProvider = ({ children }) => {
 // //para mostra
 
     const [cartas, setCartas] = useState([])
-        const fetchHistorias = async () => {
+    const [dataCarta, setDataCarta] = useState(null);
+    const fetchHistorias = async () => {
             try {
                 const response = await fetch('https://servidor-json-prueba.vercel.app/cervezas');
                 const data = await response.json();
@@ -31,7 +32,7 @@ export const ContextoProvider = ({ children }) => {
     return (
         <ContextoGlobal.Provider value={{ 
             // historias, setHistorias, dataHistoria, setDataHistoria, isOpen, onOpen, onClose, fetchHistorias 
-            cartas,setCartas,fetchHistorias
+            cartas,setCartas,fetchHistorias,dataCarta, setDataCarta
             }}>
             {children}
         </ContextoGlobal.Provider>

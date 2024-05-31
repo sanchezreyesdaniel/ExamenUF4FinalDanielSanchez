@@ -8,7 +8,7 @@ const Cards = () => {
     
   
     return (
-        <div class="container-fluid px-4 lg:px-32">
+        <div className="container-fluid px-4 lg:px-32">
       <div className="row row-cols-1 row-cols-sm-2 row-cols-lg-3 g-4">
         {cartas.map((historia, index) => (
           <Card
