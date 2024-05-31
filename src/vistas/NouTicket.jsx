@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { ContextoGlobal } from '../context/GlobalContext';
-
+//Historia5
 export function NouTicket() {
     const { fetchTicketsPendientes } = useContext(ContextoGlobal);
     const [codigo, setCodigo] = useState('');
